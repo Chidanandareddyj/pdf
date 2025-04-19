@@ -4,6 +4,7 @@ import "./globals.css";
 import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
+import { ClerkProvider } from "@clerk/nextjs";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,13 +22,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
+
     <html lang="en">
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
-      >{children}</body>
+        >{children}</body>
     </html>
+        </ClerkProvider>
   );
 }
