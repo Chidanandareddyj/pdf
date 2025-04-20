@@ -5,6 +5,7 @@ import { Inter as FontSans } from "next/font/google"
  
 import { cn } from "@/lib/utils"
 import { ClerkProvider } from "@clerk/nextjs";
+import SiteHeader from "@/components/home/site-header";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,7 +31,9 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
-        >{children}</body>
+        >
+          {/* <SiteHeader /> */}
+          {children}</body>
     </html>
         </ClerkProvider>
   );
