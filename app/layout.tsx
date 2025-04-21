@@ -6,6 +6,7 @@ import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { ClerkProvider } from "@clerk/nextjs";
 import SiteHeader from "@/components/home/site-header";
+import { Toaster } from "sonner";
  
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -33,7 +34,9 @@ export default function RootLayout({
         )}
         >
           {/* <SiteHeader /> */}
-          {children}</body>
+          {children}
+          <Toaster/>
+          </body>
     </html>
         </ClerkProvider>
   );

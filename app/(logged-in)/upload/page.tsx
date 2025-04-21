@@ -3,9 +3,12 @@
 import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { UploadButton } from '@/utils/uploadthing'
 import { Sparkle } from 'lucide-react'
 import React from 'react'
 import { z } from 'zod'
+import { toast } from "sonner"
+
 
 const uploadSchema = z.object({
     file: z
@@ -31,6 +34,8 @@ const page = () => {
         }
     }
 
+    
+
     return (
         <BackgroundBeamsWithCollision className="min-h-screen px-4 sm:px-6 lg:px-8"> {/* Added responsive padding */}
             <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 py-8 sm:py-16">
@@ -46,19 +51,32 @@ const page = () => {
                 </h1>
 
                 <form className="w-full max-w-[90%] sm:max-w-md mt-4 sm:mt-8 space-y-4" onSubmit={handlesubmit}>
-                    <div className="flex flex-col items-center gap-3 sm:gap-4">
-                        <Input
-                            type="file"
-                            accept=".pdf"
-                            name="file-upload"
-                            id="file-upload"
-                            className="w-full cursor-pointer file:cursor-pointer file:border-0 file:bg-primary file:text-white file:px-2 sm:file:px-4 file:py-1 sm:file:py-2 file:mr-2 sm:file:mr-4 file:rounded-lg hover:file:bg-primary/90 transition-all text-sm sm:text-base"
-                            placeholder='Upload your PDF'
-                        />
+                    <div className="flex flex-col items-center w-full space-y-4">
+                        <div className="w-full">
+                            <UploadButton
+                                endpoint="pdfuploader"
+                                onClientUploadComplete={(res) => {
+                                    console.log("Files: ", res);
+                                    toast.success("Upload Completed", {
+                                        position: "top-center",
+                                    });
+                                }}
+                                onUploadError={(error: Error) => {
+                                    toast.error(`Upload failed: ${error.message}`, {
+                                        position: "top-center",
+                                    });
+                                }}
+                                appearance={{
+                                    button: "bg-primary hover:bg-primary/90 text-white w-full",
+                                    allowedContent: "text-gray-400 text-sm",
+                                }}
+                            />
+                        </div>
 
-                        <Button 
+                        <Button
                             type="submit"
-                            className="w-full bg-primary hover:bg-primary/90 text-white font-medium py-1.5 sm:py-2 px-3 sm:px-4 rounded-lg transition-all text-sm sm:text-base"
+                            className="w-full bg-primary hover:bg-primary/90 text-white font-semibold 
+                            rounded-lg transition-colors duration-200 py-2.5"
                         >
                             Upload PDF
                         </Button>
