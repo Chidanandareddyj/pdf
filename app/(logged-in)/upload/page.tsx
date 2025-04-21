@@ -8,6 +8,7 @@ import { Sparkle } from 'lucide-react'
 import React from 'react'
 import { z } from 'zod'
 import { toast } from "sonner"
+import { generatepdfsummary } from '@/actions/upload-actions'
 
 
 const uploadSchema = z.object({
@@ -21,7 +22,7 @@ const uploadSchema = z.object({
         })
 })
 
-const page = () => {
+const  page = async() => {
     const handlesubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formdata = new FormData(e.currentTarget);
@@ -55,8 +56,24 @@ const page = () => {
                         <div className="w-full">
                             <UploadButton
                                 endpoint="pdfuploader"
-                                onClientUploadComplete={(res) => {
-                                    console.log("Files: ", res);
+                                onClientUploadComplete={async (res) => {
+                                    console.log("Full response:", res);
+                                    if (res && res.length > 0) {
+                                        // Format the data properly for your server action
+                                        const uploadData = {
+                                            serverData: {
+                                                userid: "user-id-here", // You need to get this from your auth system
+                                                file: {
+                                                    ufsUrl: res[0].ufsUrl,
+                                                    name: res[0].name
+                                                }
+                                            }
+                                        };
+                                        
+                                        const summary = await generatepdfsummary(uploadData);
+                                        console.log({summary});
+                                    }
+                                    
                                     toast.success("Upload Completed", {
                                         position: "top-center",
                                     });
