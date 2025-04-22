@@ -71,6 +71,8 @@ const  page = async() => {
                                         };
                                         
                                         const summary = await generatepdfsummary(uploadData);
+
+                                        
                                         console.log({summary});
                                     }
                                     
