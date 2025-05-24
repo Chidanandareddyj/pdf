@@ -33,7 +33,6 @@ export default function RootLayout({
           fontSans.variable
         )}
         >
-          {/* <SiteHeader /> */}
           {children}
           <Toaster/>
           </body>

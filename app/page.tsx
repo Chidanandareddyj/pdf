@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, useAnimation } from "framer-motion";
 import SiteHeader from "@/components/home/site-header";
 import { HeroSection } from "@/components/home/hero-section";
-import FeaturesSection from "@/components/home/features-section";
 import ExampleSection from "@/components/home/example-section";
-import TestimonialsSection from "@/components/home/testimonials-section";
 import CTASection from "@/components/home/cta-section";
 import SiteFooter from "@/components/home/site-footer";
 
@@ -38,31 +36,17 @@ const AnimatedBackground = () => {
 };    
 
 export default function Component() {
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-gray-900 via-gray-800 to-black text-white font-sans relative overflow-hidden">
       <AnimatedBackground />
       <div className="relative z-10">
 
-        {/* Site Header */}
         <SiteHeader />
 
         <main>         
-
-          {/* Hero Section */}
           <HeroSection />
-
-          {/* Features Section */}
-         <FeaturesSection />
-
-          {/* Example Section */}
           <ExampleSection />
-          
-          {/* Testimonials Section */}
-          <TestimonialsSection />
-
-          {/* CTA Section */}
           <CTASection />
         </main>
 

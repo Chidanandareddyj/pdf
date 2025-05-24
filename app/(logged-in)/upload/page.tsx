@@ -8,7 +8,7 @@ import { Sparkle } from 'lucide-react'
 import React from 'react'
 import { z } from 'zod'
 import { toast } from "sonner"
-import { generatepdfsummary } from '@/actions/upload-actions'
+import { generatepdfsummary, storesummaryaction } from '@/actions/upload-actions'
 
 
 const uploadSchema = z.object({
@@ -59,10 +59,9 @@ const  page = async() => {
                                 onClientUploadComplete={async (res) => {
                                     console.log("Full response:", res);
                                     if (res && res.length > 0) {
-                                        // Format the data properly for your server action
                                         const uploadData = {
                                             serverData: {
-                                                userid: "user-id-here", // You need to get this from your auth system
+                                                userid: "user-id-here",
                                                 file: {
                                                     ufsUrl: res[0].ufsUrl,
                                                     name: res[0].name
@@ -71,7 +70,18 @@ const  page = async() => {
                                         };
                                         
                                         const summary = await generatepdfsummary(uploadData);
-
+                                        let storeresult:any;
+                                        if(summary){
+                                            storeresult=await storesummaryaction({
+                                                summary_text: typeof summary?.summary === "string" ? summary.summary : "",
+                                                original_file_url: res[0].ufsUrl,
+                                                title: res[0].name,
+                                                file_name: res[0].name,
+                                            });
+                                            toast.success("Summary stored successfully", {
+                                                position: "top-center",
+                                            });
+                                        }
                                         
                                         console.log({summary});
                                     }
